@@ -1,0 +1,42 @@
+<idea-plugin version="2">
+    <id>com.cyrusinnovation.computation.plugin.idea</id>
+    <name>Computation Engine</name>
+    <version>1.0</version>
+    <vendor email="ngoodwin@cyrusinnovation.com" url="http://www.cyrusinnovation.com">Cyrus Innovation</vendor>
+
+    <description><![CDATA[
+      IntelliJ IDEA plugin to help with development of computation engine computations.
+    ]]></description>
+
+    <change-notes/>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products -->
+    <depends>org.intellij.scala</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+
+    <actions>
+        <group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="Myplugin.Textboxes" class="com.cyrusinnovation.computation.HelloWorldAction" text="Text _Boxes"
+                    description="A test menu item"/>
+        </group>
+    </actions>
+
+</idea-plugin>

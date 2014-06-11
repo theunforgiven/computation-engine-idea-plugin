@@ -32,10 +32,10 @@
 
 
     <actions>
-        <group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
+        <group id="ComputationEngine.ComputationEngineMenu" text="_Computation Engine" description="Computation Engine Helpers">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="com.cyrusinnovation.computation.HelloWorldAction" text="Text _Boxes"
-                    description="A test menu item"/>
+            <action id="ComputationEngine.GenerateComputationSources" class="com.cyrusinnovation.computation.GenerateComputationSourceAction" text="Generate _Source"
+                    description="Generate the source for the selected computation constructor"/>
         </group>
     </actions>
 

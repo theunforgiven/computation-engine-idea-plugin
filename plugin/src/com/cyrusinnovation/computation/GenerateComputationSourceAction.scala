@@ -10,26 +10,31 @@ import org.jetbrains.plugins.scala.lang.psi.api.base.ScConstructor
 class GenerateComputationSourceAction extends AnAction("Generate _Source") {
   def actionPerformed(event: AnActionEvent) {
     val project = event.getProject
+
+    findFirstParentConstructor(findElementUnderCursor(project)) match {
+      case Some(constructor: ScConstructor) => generateSourceForConstructor(constructor, project)
+      case None => constructorNotFound(project)
+    }
+  }
+
+  private def findElementUnderCursor(project: Project): PsiElement = {
     val fileEditor = FileEditorManager.getInstance(project).getSelectedTextEditor
     val psi = PsiDocumentManager.getInstance(project).getPsiFile(fileEditor.getDocument)
-    val elementUnderCursor = psi.findElementAt(fileEditor.getCaretModel.getOffset)
-    val constructor = findConstructorFrom(elementUnderCursor)
+    psi.findElementAt(fileEditor.getCaretModel.getOffset)
+  }
 
-    constructor match {
-      case Some(c: ScConstructor) => generateSourceForConstructor(c, project) 
-      case None => Messages.showMessageDialog(project, "Could not resolve computation type from cursor position.", "Could Not Find Constructor", Messages.getErrorIcon)
+  private def findFirstParentConstructor(element: PsiElement): Option[ScConstructor] = {
+    Option(element).fold(Option.empty[ScConstructor]) {
+      case constructor: ScConstructor => Some(constructor)
+      case other                      => findFirstParentConstructor(element.getParent)
     }
+  }
+
+  private def constructorNotFound(project: Project) {
+    Messages.showMessageDialog(project, "Could not resolve computation type from cursor position.", "Could Not Find Constructor", Messages.getErrorIcon)
   }
 
   private def generateSourceForConstructor(constructor: ScConstructor, project: Project) {
     Messages.showMessageDialog(project, "Found computation type at cursor position.", "Computation Found", Messages.getInformationIcon)
-  }
-
-  private def findConstructorFrom(element: PsiElement): Option[ScConstructor] = {
-    element match {
-      case constructor: ScConstructor => Some(constructor)
-      case null => None
-      case other => findConstructorFrom(element.getParent)
-    }
   }
 }

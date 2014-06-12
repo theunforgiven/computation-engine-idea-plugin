@@ -7,7 +7,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.psi.{PsiDocumentManager, PsiElement}
 import org.jetbrains.plugins.scala.lang.psi.api.base.ScConstructor
 
-class GenerateComputationSourceAction extends AnAction("Generate _Source") {
+class GenerateComputationSourceAction extends AnAction("Generate _Source") with PsiHelpers {
   def actionPerformed(event: AnActionEvent) {
     val project = event.getProject
 
@@ -21,13 +21,6 @@ class GenerateComputationSourceAction extends AnAction("Generate _Source") {
     val fileEditor = FileEditorManager.getInstance(project).getSelectedTextEditor
     val psi = PsiDocumentManager.getInstance(project).getPsiFile(fileEditor.getDocument)
     psi.findElementAt(fileEditor.getCaretModel.getOffset)
-  }
-
-  private def findFirstParentConstructor(element: PsiElement): Option[ScConstructor] = {
-    Option(element).fold(Option.empty[ScConstructor]) {
-      case constructor: ScConstructor => Some(constructor)
-      case other                      => findFirstParentConstructor(element.getParent)
-    }
   }
 
   private def constructorNotFound(project: Project) {

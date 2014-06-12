@@ -20,6 +20,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <languageInjector implementation="com.cyrusinnovation.computation.SimpleComputationLanguageInjector" />
     </extensions>
 
     <application-components>
